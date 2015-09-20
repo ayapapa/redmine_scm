@@ -3,7 +3,6 @@ require_dependency 'repositories_controller'
 module ScmRepositoriesControllerPatch
 
     def self.included(base)
-        base.extend(ClassMethods)
         base.send(:include, InstanceMethods)
         base.class_eval do
             unloadable
@@ -18,9 +17,6 @@ module ScmRepositoriesControllerPatch
                 alias_method_chain :edit, :scm
             end
         end
-    end
-
-    module ClassMethods
     end
 
     module InstanceMethods
@@ -61,7 +57,7 @@ module ScmRepositoriesControllerPatch
                     attributes = {}
                     extra_attrs = {}
                     params[:repository].each do |name, value|
-                        if name =~ %r{^extra_}
+                        if name =~ %r{\Aextra_}
                             extra_attrs[name] = value
                         else
                             attributes[name] = value
@@ -97,7 +93,7 @@ module ScmRepositoriesControllerPatch
                         if ScmConfig['only_creator'] && request.post? && @repository.errors.empty? && !@repository.created_with_scm
                             @repository.errors.add(:base, :scm_only_creator)
                         elsif !ScmConfig['allow_add_local'] && request.post? && @repository.errors.empty? && !@repository.created_with_scm &&
-                            attributes['url'] =~ %r{^(file://|([a-z]:)?\.*[\\/])}i
+                            attributes['url'] =~ %r{\A(file://|([a-z]:)?\.*[\\/])}i
                             @repository.errors.add(:base, :scm_local_repositories_denied)
                         end
 
@@ -139,7 +135,7 @@ module ScmRepositoriesControllerPatch
             #        p       = {}
             #        p_extra = {}
             #        p1.each do |k, v|
-            #            if k =~ /^extra_/
+            #            if k =~ /\Aextra_/
             #                p_extra[k] = v
             #            else
             #                p[k] = v
@@ -176,7 +172,7 @@ module ScmRepositoriesControllerPatch
                         attrs = {}
                         extra = {}
                         attributes.each do |name, value|
-                            if name =~ %r{^extra_}
+                            if name =~ %r{\Aextra_}
                                 extra[name] = value
                             else
                                 attrs[name] = value
@@ -194,7 +190,7 @@ module ScmRepositoriesControllerPatch
                         if ScmConfig['only_creator'] && @repository.errors.empty? && !@repository.created_with_scm
                             @repository.errors.add(:base, :scm_only_creator)
                         elsif !ScmConfig['allow_add_local'] && @repository.errors.empty? && !@repository.created_with_scm &&
-                            attrs['url'] =~ %r{^(file://|([a-z]:)?\.*[\\/])}i
+                            attrs['url'] =~ %r{\A(file://|([a-z]:)?\.*[\\/])}i
                             @repository.errors.add(:base, :scm_local_repositories_denied)
                         end
 
