@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
 gem "octokit"
-gem "rails-observers" "0.1.2"
+gem "rails-observers"
 
