@@ -11,10 +11,16 @@ module ScmRepositoriesControllerPatch
             alias_method_chain :destroy, :confirmation
 
             if Project.method_defined?(:repositories)
-                alias_method_chain :create, :scm
-                alias_method_chain :update, :scm
+                #alias_method_chain :create, :scm
+                alias_method :create_without_scm, :create
+                alias_method :create, :create_with_scm
+                #alias_method_chain :update, :scm
+                alias_method :update_without_scm, :update
+                alias_method :update, :update_with_scm
             else
-                alias_method_chain :edit, :scm
+                #alias_method_chain :edit, :scm
+                alias_method :edit_without_scm, :edit
+                alias_method :edit, :edit_with_scm
             end
         end
     end
