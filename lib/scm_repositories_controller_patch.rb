@@ -6,9 +6,12 @@ module ScmRepositoriesControllerPatch
         base.send(:include, InstanceMethods)
         base.class_eval do
             unloadable
-            before_filter :delete_scm, :only => :destroy
+            #before_filter :delete_scm, :only => :destroy
+            before_action :delete_scm, :only => :destroy
 
-            alias_method_chain :destroy, :confirmation
+            #alias_method_chain :destroy, :confirmation
+            alias_method :destroy_without_confirmation, :destroy
+            alias_method :destroy, :destroy_with_confirmation
 
             if Project.method_defined?(:repositories)
                 #alias_method_chain :create, :scm
