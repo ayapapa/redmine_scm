@@ -7,11 +7,21 @@ module ScmRepositoriesHelperPatch
         base.class_eval do
             unloadable
 
-            alias_method_chain :repository_field_tags, :add
-            alias_method_chain :subversion_field_tags, :add
-            alias_method_chain :mercurial_field_tags,  :add
-            alias_method_chain :git_field_tags,        :add
-            alias_method_chain :bazaar_field_tags,     :add
+            #alias_method_chain :repository_field_tags, :add
+            alias_method :repository_field_tags_without_add, :repository_field_tags
+            alias_method :repository_field_tags, :repository_field_tags_with_add
+            #alias_method_chain :subversion_field_tags, :add
+            alias_method_chain :subversion_field_tags_without_add, :subversion_field_tags
+            alias_method_chain :subversion_field_tags, :subversion_field_tags_with_add
+            #alias_method_chain :mercurial_field_tags, :add
+            alias_method_chain :mercurial_field_tags_without_add, :mercurial_field_tags
+            alias_method_chain :mercurial_field_tags, :mercurial_field_tags_with_add
+            #alias_method_chain :git_field_tags,        :add
+            alias_method_chain :git_field_tags_without_add, :git_field_tags
+            alias_method_chain :git_field_tags, :git_field_tags_with_add
+            #alias_method_chain :bazaar_field_tags,     :add
+            alias_method_chain :bazaar_field_tags_without_add, :bazaar_field_tags
+            alias_method_chain :bazaar_field_tags, :adbazaar_field_tags_with_addd
         end
     end
 
