@@ -21,7 +21,7 @@ module ScmRepositoriesHelperPatch
             alias_method :git_field_tags, :git_field_tags_with_add
             #alias_method_chain :bazaar_field_tags,     :add
             alias_method :bazaar_field_tags_without_add, :bazaar_field_tags
-            alias_method :bazaar_field_tags, :adbazaar_field_tags_with_addd
+            alias_method :bazaar_field_tags, :bazaar_field_tags_with_add
         end
     end
 
